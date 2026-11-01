@@ -1,7 +1,9 @@
-hw.pdf: hw.tex
-	latexmk -pdf -interaction=nonstopmode -halt-on-error hw.tex
+all: hw1.pdf hw2.pdf
+
+%.pdf: %.tex
+	latexmk -pdf -interaction=nonstopmode -halt-on-error $<
 
 clean:
-	latexmk -c hw.tex
+	latexmk -c
 
-.PHONY: clean
+.PHONY: all clean
