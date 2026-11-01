@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% Common PDE notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\lap}{\Delta}
+\newcommand{\grad}{\nabla}
+
+\title{APM5557: Partial Differential Equations\\Weak and Strong Maximum Principles}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Both principles say a harmonic function cannot exceed its boundary values.
+\textbf{The weak version says the maximum is reached on the boundary, though it
+might also be reached inside. The strong version says it cannot be reached
+inside at all, unless $u$ is constant.}
+
+Throughout, $u$ is harmonic ($\lap u = 0$) in a bounded open set $\Omega$ and
+continuous on $\overline{\Omega}$. Applying either principle to $-u$ gives the
+same result for minimums.
+
+\section*{The two statements}
+
+\textbf{Weak maximum principle:}
+\[
+\max_{\overline{\Omega}} u = \max_{\partial\Omega} u
+\]
+
+\textbf{Strong maximum principle:} if $\Omega$ is connected and $u$ reaches its
+maximum at an interior point, then $u$ is constant.
+
+\section*{Comparison}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.2\textwidth}
+                |>{\raggedright\arraybackslash}p{0.34\textwidth}
+                |>{\raggedright\arraybackslash}p{0.34\textwidth}|}
+\hline
+ & \textbf{Weak} & \textbf{Strong} \\
+\hline
+\textbf{Claim} & The maximum occurs on $\partial\Omega$
+  & The maximum occurs only on $\partial\Omega$, unless $u$ is constant \\
+\hline
+\textbf{Interior maximum} & Not ruled out & Forces $u$ to be constant \\
+\hline
+\textbf{Needs $\Omega$ connected?} & No & Yes \\
+\hline
+\textbf{Usual proof} & Perturbation and calculus & Mean value property \\
+\hline
+\textbf{Typical use} & Uniqueness, stability, comparing solutions
+  & Strict inequalities such as $u > 0$ inside \\
+\hline
+\end{tabular}
+\end{center}
+
+The strong version implies the weak one. If the maximum is reached inside, the
+component of $\Omega$ containing that point has constant $u$, so the same value
+is also reached on the boundary.
+
+\section*{Why each is true}
+
+\textbf{Weak:} let $v = u + \varepsilon|x|^2$, so $\lap v = 2n\varepsilon > 0$.
+At an interior maximum of $v$, all second derivatives would be $\le 0$, so
+$\lap v \le 0$, which is a contradiction. So $v$ reaches its maximum on the
+boundary, and letting $\varepsilon \to 0$ gives the result for $u$.
+
+\textbf{Strong:} suppose $u$ reaches its maximum $M$ at an interior point. By
+the mean value property, $M$ is the average of $u$ over a small ball around
+that point. Since $u \le M$ everywhere, that average can only equal $M$ if
+$u = M$ on the whole ball. So the set where $u = M$ is open. It is also closed
+in $\Omega$ by continuity, so connectedness makes it all of $\Omega$.
+
+\section*{Why the hypotheses matter}
+
+\begin{itemize}
+\item \textbf{Connectedness:} let $\Omega$ be two separate disks, with $u = 1$
+  on one and $u = 0$ on the other. $u$ is harmonic and reaches its maximum
+  inside, but is not constant. The weak principle still holds, but the strong
+  one fails.
+\item \textbf{Boundedness:} let $\Omega$ be the upper half-plane with $u = y$.
+  Then $u = 0$ on the boundary, but $u$ grows without limit inside, so even the
+  weak principle fails.
+\end{itemize}
+
+\section*{What each gives you}
+
+\begin{itemize}
+\item \textbf{Weak:} if $u_1$ and $u_2$ solve the same Dirichlet problem, then
+  $w = u_1 - u_2$ has zero boundary values. Its maximum and minimum are both 0,
+  so $w = 0$. This gives uniqueness.
+\item \textbf{Strong:} suppose $\Omega$ is connected, $u \ge 0$ on
+  $\partial\Omega$, and $u$ is not identically zero there. The weak principle
+  gives only $u \ge 0$ inside, but the strong principle gives $u > 0$
+  everywhere inside. If $u$ were 0 at an interior point, that would be an
+  interior minimum, which would make $u$ constant.
+\end{itemize}
+
+\end{document}
