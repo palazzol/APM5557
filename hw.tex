@@ -198,36 +198,74 @@ is 0, $E_\Omega(t)$ is constant in time.
 From 3.3-2a in the book.
 
 For the non-homogeneous wave equation $u_{tt} = \lap u + f(x,t)$,
-show uniqueness of the solution $u$ given initial conditions $u(x,0) = g(x)$
+show uniqueness of the solution $u$ given the Dirichlet condition $u = g$ on $\partial \Omega$.
 \end{problem}
 
 \begin{proof}
-    Assume we have two solutions $u_1$ and $u_2$ to the non-homogeneous wave equation with the same initial conditions. Define $u = u_1 - u_2$. Then $u$ satisfies the homogeneous wave equation:   
+    Assume we have two solutions $u_1$ and $u_2$ to the non-homogeneous wave equation, with the same boundary and initial conditions. Define $v = u_1 - u_2$. Then $v$ satisfies the homogeneous wave equation:   
 
-$u_{tt} = \lap u$
+$u_{1tt} = \lap u_1 + f(x,t)$ in $\Omega$
 
-$u = 0$ on $\partial \Omega$
+$u_{2tt} = \lap u_2 + f(x,t)$ in $\Omega$
 
-By the previous problem, we know that the energy $E(t) = \int_\Omega (u_t^2 + |\grad u|^2) dx$ is constant in time.
+$v_{tt} = \lap v$ in $\Omega$
 
+$u_1 = g$ on $\partial \Omega$
+
+$u_2 = g$ on $\partial \Omega$
+
+$v = 0$ on $\partial \Omega$
+
+By the same reasoning, we also have the initial conditions:
+
+$v(x,0) = 0$ in $\Omega$
+
+$v_t(x,0) = 0$ in $\Omega$
+
+By the previous problem applied with $c=1$, we know that the energy $E(t) = \int_\Omega (v_t^2 + |\grad v|^2) dx$ is constant in time.
+
+At $t = 0$, $v(x,0) = 0$ in $\Omega$ gives $\grad v(x,0) = 0$, and
+$v_t(x,0) = 0$, so $E(0) = 0$. Since $E$ is constant, $E(t) = 0$ for all $t$.
+The integrand $v_t^2 + |\grad v|^2$ is continuous and nonnegative with zero
+integral, so $v_t = 0$ everywhere. Therefore $v(x,t) = v(x,0) = 0$, so
+$u_1 = u_2$.
 \end{proof}
 
 \begin{problem}
 From 3.3-2b in the book.
 
 For the non-homogeneous wave equation $u_{tt} = \lap u + f(x,t)$,
-show uniqueness of the solution $u$ given initial conditions $u_t(x,0) = g(x)$
+show uniqueness of the solution $u$ given the Neumann condition $\pd{u}{n} = h$ on $\partial \Omega$.
 \end{problem}
 
 \begin{proof}
-    Assume we have two solutions $u_1$ and $u_2$ to the non-homogeneous wave equation with the same initial conditions. Define $u = u_1 - u_2$. Then $u$ satisfies the homogeneous wave equation:   
+    Assume we have two solutions $u_1$ and $u_2$ to the non-homogeneous wave equation, with the same boundary and initial conditions. Define $v = u_1 - u_2$. Then $v$ satisfies the homogeneous wave equation:   
 
-$u_{tt} = \lap u$
+$u_{1tt} = \lap u_1 + f(x,t)$ in $\Omega$
 
-$u_t = 0$ on $\partial \Omega$
+$u_{2tt} = \lap u_2 + f(x,t)$ in $\Omega$
 
-By the previous problem, we know that the energy $E(t) = \int_\Omega (u_t^2 + |\grad u|^2) dx$ is constant in time.
+$v_{tt} = \lap v$ in $\Omega$
 
+$\pd{u_1}{n} = h$ on $\partial \Omega$
+
+$\pd{u_2}{n} = h$ on $\partial \Omega$
+
+$\pd{v}{n} = 0$ on $\partial \Omega$
+
+By the same reasoning, we also have the initial conditions:
+
+$v(x,0) = 0$ in $\Omega$
+
+$v_t(x,0) = 0$ in $\Omega$
+
+By Problem 2 applied with $c=1$, we know that the energy $E(t) = \int_\Omega (v_t^2 + |\grad v|^2) dx$ is constant in time.
+
+At $t = 0$, $v(x,0) = 0$ in $\Omega$ gives $\grad v(x,0) = 0$, and
+$v_t(x,0) = 0$, so $E(0) = 0$. Since $E$ is constant, $E(t) = 0$ for all $t$.
+The integrand $v_t^2 + |\grad v|^2$ is continuous and nonnegative with zero
+integral, so $v_t = 0$ everywhere. Therefore $v(x,t) = v(x,0) = 0$, so
+$u_1 = u_2$.
 \end{proof}
 
 \begin{problem}
