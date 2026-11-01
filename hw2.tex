@@ -28,10 +28,40 @@
 \begin{problem}
 From problem 4.1-3 in the book
 
+Prove that the solution of the Robin or third boundary value problem for the
+Laplace equation:
+
+$\lap u = 0$ in $\Omega$, with $\frac{\partial u}{\partial n} + \alpha u = \beta$ on $\partial \Omega$
+
+is unique when $\alpha \ge 0$ is a constant.
 \end{problem}
 
 \begin{proof}[Solution]
-Solution goes here.
+Suppose $u_1$ and $u_2$ are two solutions to the Robin boundary value problem. Then their difference $v = u_1 - u_2$ satisfies the Laplace equation and the homogeneous Robin boundary condition:
+
+$\lap v = 0$ in $\Omega$ and $\frac{\partial v}{\partial n} + \alpha v = 0$ on $\partial \Omega$.
+
+Now we use Green's first identity for $v$ and $v$, which states that for a sufficiently smooth function $v$ on a domain $\Omega$ with boundary $\partial \Omega$:
+\begin{equation} \label{eq:green-v}
+\int_\Omega \left( v \lap v + |\grad v|^2 \right) dx
+  = \int_{\partial\Omega} v \, \pd{v}{n} \, dS.
+\end{equation}
+
+Now, since $\lap v = 0$, the left-hand side simplifies to:
+\begin{equation}
+\int_\Omega |\grad v|^2 \, dx = \int_{\partial\Omega} v \, \pd{v}{n} \, dS.
+\end{equation}
+
+From the Robin boundary condition, we have $\pd{v}{n} = -\alpha v$ on $\partial \Omega$. Substituting this into the boundary integral gives:
+\begin{equation}
+\int_\Omega |\grad v|^2 \, dx = \int_{\partial\Omega} v (-\alpha v) \, dS = -\alpha \int_{\partial\Omega} v^2 \, dS.
+\end{equation}
+
+If $\alpha \ge 0$, then the right-hand side is non-positive, while the left-hand side is non-negative. 
+
+This means that $\grad v = 0$ in $\Omega$ and $\alpha v = 0$ and $v = 0$ on $\partial \Omega$
+
+Since $\grad v = 0$ in $\Omega$, $v$ is constant in $\Omega$, and since $v = 0$ on the boundary, it must be that $v = 0$ everywhere in $\Omega$.
 \end{proof}
 
 \begin{problem}
