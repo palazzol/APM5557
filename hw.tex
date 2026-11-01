@@ -271,33 +271,79 @@ $u_1 = u_2$.
 \begin{problem}
 From 3.3-6 in the book.
 
+We have a flexible beam with the ends clamped at $x=0$ and $x=1$.
+
+We have the following:
+
+$u_{tt} + \gamma^2 u_{xxxx} = 0$
+
+$u(0,t) = 0$ and $u(1,t) = 0$ for all $t$
+
+$u_x(0,t) = 0$ and $u_x(1,t) = 0$ for all $t$
+
+Show that energy is conserved, where the energy is defined as:
+
+$E = \frac{1}{2} \int_0^1 (u_t^2 + \gamma^2 u_{xx}^2) dx$.
 \end{problem}
 
 \begin{proof}
-
-We will use Green's first identity, which states that for a $C^1$ scalar
-field $f$ and a $C^2$ scalar field $g$ on $\overline{\Omega}$,
-\begin{equation} \label{eq:green}
-\int_\Omega \left( f \lap g + \grad f \cdot \grad g \right) dx
-  = \int_{\partial\Omega} f \, \pd{g}{n} \, dS.
+This is similar to Problem 2, except that it is only in $\R^1$. To show that
+$E$ is constant, take its time derivative and set it equal to 0:
+\begin{equation} \label{eq:beam-dEdt}
+\frac{dE}{dt} = \frac{d}{dt} \, \frac{1}{2} \int_0^1
+  \left( u_t^2 + \gamma^2 u_{xx}^2 \right) dx = 0.
 \end{equation}
-Substituting $u$ for both $f$ and $g$ in \eqref{eq:green}, and using
-$\grad u \cdot \grad u = |\grad u|^2$,
-\begin{equation} \label{eq:green-u}
-\int_\Omega \left( u \lap u + |\grad u|^2 \right) dx
-  = \int_{\partial\Omega} u \, \pd{u}{n} \, dS.
+Splitting this into two integrals,
+\begin{equation} \label{eq:beam-dEdt-split}
+\frac{d}{dt} \, \frac{1}{2} \int_0^1 u_t^2 \, dx
+  + \frac{d}{dt} \, \frac{1}{2} \int_0^1 \gamma^2 u_{xx}^2 \, dx = 0.
 \end{equation}
-If either $u(x,t) = 0$ or $\pd{u}{n} = 0$ on $\partial\Omega$, then the
-integrand on the right side of \eqref{eq:green-u} vanishes, so that term is
-zero and
-\begin{equation} \label{eq:green-zero}
-\int_\Omega \left( u \lap u + |\grad u|^2 \right) dx = 0.
+Bringing $\frac{d}{dt}$ inside the first integral, $u_t^2$ becomes
+$2 u_t u_{tt}$, which cancels the $\frac{1}{2}$ for that term:
+\begin{equation} \label{eq:beam-dEdt-first}
+\int_0^1 u_t u_{tt} \, dx
+  + \frac{d}{dt} \, \frac{1}{2} \int_0^1 \gamma^2 u_{xx}^2 \, dx = 0.
 \end{equation}
-Rearranging \eqref{eq:green-zero},
-\begin{equation} \label{eq:grad-lap}
-\int_\Omega |\grad u|^2 \, dx = \int_\Omega -u \lap u \, dx.
+Bringing $\frac{d}{dt}$ inside the second integral in the same way,
+$u_{xx}^2$ becomes $2 u_{xx} u_{xxt}$, which cancels the $\frac{1}{2}$ for
+that term. Since $\gamma$ is constant, we can also pull $\gamma^2$ out of the
+integral:
+\begin{equation} \label{eq:beam-dEdt-second}
+\int_0^1 u_t u_{tt} \, dx
+  + \gamma^2 \int_0^1 u_{xx} u_{xxt} \, dx = 0.
 \end{equation}
-
+Now use integration by parts twice on the second term. The first time,
+\begin{equation} \label{eq:beam-ibp1}
+\int_0^1 u_{xx} u_{xxt} \, dx
+  = \Big[ u_{xx} u_{xt} \Big]_0^1 - \int_0^1 u_{xxx} u_{xt} \, dx.
+\end{equation}
+Since $u_x(0,t) = 0$ and $u_x(1,t) = 0$ for all $t$, also $u_{xt}(0,t) = 0$
+and $u_{xt}(1,t) = 0$, so the boundary term is 0 and
+\begin{equation} \label{eq:beam-ibp1-result}
+\int_0^1 u_{xx} u_{xxt} \, dx = -\int_0^1 u_{xxx} u_{xt} \, dx.
+\end{equation}
+The second time,
+\begin{equation} \label{eq:beam-ibp2}
+-\int_0^1 u_{xxx} u_{xt} \, dx
+  = -\Big[ u_{xxx} u_t \Big]_0^1 + \int_0^1 u_{xxxx} u_t \, dx.
+\end{equation}
+Since $u(0,t) = 0$ and $u(1,t) = 0$ for all $t$, also $u_t(0,t) = 0$ and
+$u_t(1,t) = 0$, so this boundary term is also 0 and
+\begin{equation} \label{eq:beam-ibp2-result}
+\int_0^1 u_{xx} u_{xxt} \, dx = \int_0^1 u_{xxxx} u_t \, dx.
+\end{equation}
+Substituting \eqref{eq:beam-ibp2-result} back into
+\eqref{eq:beam-dEdt-second},
+\begin{equation} \label{eq:beam-dEdt-sub}
+\int_0^1 u_t u_{tt} \, dx + \gamma^2 \int_0^1 u_{xxxx} u_t \, dx = 0.
+\end{equation}
+Combining the terms and factoring out $u_t$,
+\begin{equation} \label{eq:beam-dEdt-factored}
+\frac{dE}{dt}
+  = \int_0^1 u_t \left( u_{tt} + \gamma^2 u_{xxxx} \right) dx = 0.
+\end{equation}
+The second factor is the original PDE, which is 0. Since the change in energy
+is 0, $E$ is constant in time, so energy is conserved.
 \end{proof}
 
 \end{document}
