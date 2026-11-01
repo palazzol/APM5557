@@ -33,7 +33,7 @@ Laplace equation:
 
 $\lap u = 0$ in $\Omega$, with $\frac{\partial u}{\partial n} + \alpha u = \beta$ on $\partial \Omega$
 
-is unique when $\alpha \ge 0$ is a constant.
+is unique when $\alpha > 0$ is a constant.
 \end{problem}
 
 \begin{proof}[Solution]
@@ -57,7 +57,7 @@ From the Robin boundary condition, we have $\pd{v}{n} = -\alpha v$ on $\partial 
 \int_\Omega |\grad v|^2 \, dx = \int_{\partial\Omega} v (-\alpha v) \, dS = -\alpha \int_{\partial\Omega} v^2 \, dS.
 \end{equation}
 
-If $\alpha \ge 0$, then the right-hand side is non-positive, while the left-hand side is non-negative. 
+Since $\alpha > 0$, the right-hand side is non-positive, while the left-hand side is non-negative. 
 
 This means that $\grad v = 0$ in $\Omega$ and $\alpha v = 0$ and $v = 0$ on $\partial \Omega$
 
@@ -65,8 +65,24 @@ Since $\grad v = 0$ in $\Omega$, $v$ is constant in $\Omega$, and since $v = 0$ 
 \end{proof}
 
 \begin{problem}
-From problem 4.1-7 in the book
+From problem 4.1-7a in the book
 
+If $\Omega$ is a bounded domain and $u \in C^2(\Omega) \cap C(\overline{\Omega})$
+satisfies $\lap u = 0$ in $\Omega$, then
+$\max_{\overline{\Omega}} |u| = \max_{\partial\Omega} |u|$.
+\end{problem}
+
+\begin{proof}[Solution]
+Solution goes here.
+\end{proof}
+
+\begin{problem}
+From problem 4.1-7b in the book
+
+If $\Omega = \{x \in \R^n : |x| > 1\}$ and
+$u \in C^2(\Omega) \cap C(\overline{\Omega})$ satisfies $\lap u = 0$ in $\Omega$
+and $\lim_{|x| \to \infty} u(x) = 0$, then
+$\max_{\overline{\Omega}} |u| = \max_{\partial\Omega} |u|$.
 \end{problem}
 
 \begin{proof}[Solution]
@@ -76,6 +92,47 @@ Solution goes here.
 \begin{problem}
 From problem 4.1-9a in the book
 
+Suppose $u \in C(\Omega)$ satisfies the mean value property in $\Omega$: for
+$\xi \in \Omega$ and $r > 0$ with
+$\overline{B_r(\xi)} = \{x : |x - \xi| \le r\} \subset \Omega$,
+\begin{equation} \label{eq:mvp}
+u(\xi) = \frac{1}{\omega_n} \int_{|x|=1} u(\xi + r x) \, dS_x,
+\end{equation}
+where $\omega_n$ is the measure of the $(n-1)$-dimensional sphere in $\R^n$.
+Show that $u$ satisfies the maximum principle: either $u$ is a constant, or
+\begin{equation} \label{eq:strong-max}
+u(\xi) < \sup_{x \in \Omega} u(x) \quad \text{for all } \xi \in \Omega.
+\end{equation}
+\end{problem}
+
+\begin{proof}[Solution]
+Solution goes here.
+\end{proof}
+
+\begin{problem}
+From problem 4.2-4 in the book
+
+\begin{enumerate}[label=(\alph*)]
+\item Use the weak maximum principle
+\begin{equation} \label{eq:weak-max}
+\max_{x \in \overline{\Omega}} u(x) = \max_{x \in \partial\Omega} u(x)
+\end{equation}
+to prove that the Green's function satisfies $G(x,\xi) \le 0$ for
+$x, \xi \in \Omega$ with $x \ne \xi$.
+\item Use the strong maximum principle \eqref{eq:strong-max} to prove that
+$G(x,\xi) < 0$ for $x, \xi \in \Omega$ with $x \ne \xi$.
+\end{enumerate}
+\end{problem}
+
+\begin{proof}[Solution]
+Solution goes here.
+\end{proof}
+
+\begin{problem}
+From problem 4.2-7 in the book
+
+If $u \in C(\Omega)$ satisfies the mean value property \eqref{eq:mvp}, then $u$
+is harmonic in $\Omega$.
 \end{problem}
 
 \begin{proof}[Solution]
