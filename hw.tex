@@ -1,0 +1,265 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+% Common PDE notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\lap}{\Delta}
+\newcommand{\grad}{\nabla}
+
+% One numbered problem per \begin{problem}...\end{problem}
+\theoremstyle{definition}
+\newtheorem{problem}{Problem}
+
+\title{APM5557: Partial Differential Equations\\Homework Problems}
+\author{Frank Palazzolo}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{problem}
+From page 40 in the notes.
+
+for the PDE: 
+$u_t - c^2 u_{xx} = 0$, 
+with initial condition $u(x,0) = g(x)$, 
+show that the solution is given by the formula:
+\begin{equation} \label{eq:solution}
+u(x,t) = \frac{1}{2c\sqrt{\pi t}} \int_{-\infty}^{\infty} e^{-\frac{(x-\xi)^2}{4c^2t}} g(\xi) d\xi
+\end{equation}
+\end{problem}
+
+\begin{proof}[Solution]
+First compute the time derivative of $u$. Bringing $\pd{}{t}$ inside the
+integral gives
+\begin{equation} \label{eq:ut-inside}
+u_t = \int_{-\infty}^{\infty} \pd{}{t}\left[
+  \frac{1}{2c\sqrt{\pi t}} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+\right] g(\xi) \, d\xi.
+\end{equation}
+Applying the product rule to the terms in brackets,
+\begin{equation} \label{eq:ut}
+u_t = \int_{-\infty}^{\infty} \left[
+  -\frac{1}{4c\sqrt{\pi}\, t^{3/2}} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+  + \frac{1}{2c\sqrt{\pi t}} \cdot \frac{(x-\xi)^2}{4c^2t^2} \,
+    e^{-\frac{(x-\xi)^2}{4c^2t}}
+\right] g(\xi) \, d\xi.
+\end{equation}
+Next compute the spatial derivative of $u$ in the same way. Bringing
+$\pd{}{x}$ inside the integral gives
+\begin{equation} \label{eq:ux-inside}
+u_x = \int_{-\infty}^{\infty} \pd{}{x}\left[
+  \frac{1}{2c\sqrt{\pi t}} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+\right] g(\xi) \, d\xi.
+\end{equation}
+Since the prefactor does not depend on $x$, only the exponential is
+differentiated, so
+\begin{equation} \label{eq:ux}
+u_x = \int_{-\infty}^{\infty}
+  \frac{1}{2c\sqrt{\pi t}} \cdot \left(-\frac{x-\xi}{2c^2t}\right)
+  e^{-\frac{(x-\xi)^2}{4c^2t}} g(\xi) \, d\xi.
+\end{equation}
+Taking one more derivative of \eqref{eq:ux} with respect to $x$ gives
+\begin{equation} \label{eq:uxx-inside}
+u_{xx} = \int_{-\infty}^{\infty}
+  \frac{1}{2c\sqrt{\pi t}} \, \pd{}{x}\left[
+    -\frac{x-\xi}{2c^2t} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+  \right] g(\xi) \, d\xi.
+\end{equation}
+Applying the product rule to the terms in brackets,
+\begin{equation} \label{eq:uxx}
+u_{xx} = \int_{-\infty}^{\infty}
+  \frac{1}{2c\sqrt{\pi t}} \left[
+    -\frac{1}{2c^2t} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+    + \frac{(x-\xi)^2}{4c^4t^2} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+  \right] g(\xi) \, d\xi.
+\end{equation}
+Multiplying \eqref{eq:uxx} by $c^2$ cancels some of the factors of $c$, so
+\begin{equation} \label{eq:c2uxx}
+c^2 u_{xx} = \int_{-\infty}^{\infty}
+  \frac{1}{2c\sqrt{\pi t}} \left[
+    -\frac{1}{2t} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+    + \frac{(x-\xi)^2}{4c^2t^2} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+  \right] g(\xi) \, d\xi.
+\end{equation}
+Substituting \eqref{eq:ut} and \eqref{eq:c2uxx} into the PDE gives
+\begin{equation} \label{eq:subst}
+\begin{split}
+u_t - c^2 u_{xx}
+  &= \int_{-\infty}^{\infty} \left[
+    -\frac{1}{4c\sqrt{\pi}\, t^{3/2}} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+    + \frac{1}{2c\sqrt{\pi t}} \cdot \frac{(x-\xi)^2}{4c^2t^2} \,
+      e^{-\frac{(x-\xi)^2}{4c^2t}}
+  \right] g(\xi) \, d\xi \\
+  &\quad - \int_{-\infty}^{\infty}
+  \frac{1}{2c\sqrt{\pi t}} \left[
+    -\frac{1}{2t} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+    + \frac{(x-\xi)^2}{4c^2t^2} \, e^{-\frac{(x-\xi)^2}{4c^2t}}
+  \right] g(\xi) \, d\xi.
+\end{split}
+\end{equation}
+Since
+\begin{equation} \label{eq:prefactor}
+\frac{1}{2c\sqrt{\pi t}} \cdot \frac{1}{2t}
+  = \frac{1}{4c\sqrt{\pi}\, t^{3/2}},
+\end{equation}
+the two integrals in \eqref{eq:subst} have identical integrands, so
+everything cancels and
+\begin{equation} \label{eq:pde}
+u_t - c^2 u_{xx} = 0.
+\end{equation}
+\end{proof}
+
+\begin{problem}
+From 3.3-1 in the book.
+
+Let $\Omega$ be a smooth bounded domain in $\mathbb{R}^n$. 
+For a $C^2$ solution of $u$ of the wave equation $u_{tt} = c^2 \lap{u}$, 
+show that if the energy is defined as $E_\Omega(t) = \int_\Omega (u_t^2 + c^2 |\grad u|^2) dx$, 
+and either $u(x,t) = 0$ or $\frac{\partial u}{\partial n} = 0$ on $\partial\Omega$, 
+then $E_\Omega(t)$ is constant in time.
+\end{problem}
+
+\begin{proof}[Solution]
+To show that $E_\Omega(t)$ is constant, take its time derivative and set it
+equal to 0:
+\begin{equation} \label{eq:dEdt}
+\frac{dE_\Omega}{dt} = \frac{d}{dt} \, \frac{1}{2} \int_\Omega
+  \left( u_t^2 + c^2 |\grad u|^2 \right) dx = 0.
+\end{equation}
+Splitting this into two integrals,
+\begin{equation} \label{eq:dEdt-split}
+\frac{d}{dt} \, \frac{1}{2} \int_\Omega u_t^2 \, dx
+  + \frac{d}{dt} \, \frac{1}{2} \int_\Omega c^2 |\grad u|^2 \, dx = 0.
+\end{equation}
+Bringing $\frac{d}{dt}$ inside the first integral, $u_t^2$ becomes
+$2 u_{tt} u_t$, which cancels the $\frac{1}{2}$ for that term:
+\begin{equation} \label{eq:dEdt-first}
+\int_\Omega u_{tt} u_t \, dx
+  + \frac{d}{dt} \, \frac{1}{2} \int_\Omega c^2 |\grad u|^2 \, dx = 0.
+\end{equation}
+Bringing $\frac{d}{dt}$ inside the second integral and writing
+$|\grad u|^2 = \sum_{i=1}^n u_{x_i}^2$, each $u_{x_i}^2$ becomes
+$2 u_{x_i} u_{x_i t}$, which cancels the $\frac{1}{2}$ for that term. Since
+$c$ is constant, we can also pull $c^2$ out of the integral:
+\begin{equation} \label{eq:dEdt-second}
+\int_\Omega u_{tt} u_t \, dx
+  + c^2 \int_\Omega \sum_{i=1}^n u_{x_i} u_{x_i t} \, dx = 0.
+\end{equation}
+Next we show that the second integral in \eqref{eq:dEdt-second} is equivalent
+to the integral of $-u_t \lap u$, by integrating by parts once in each $x_i$.
+Since $u_{x_i t} = (u_t)_{x_i}$, each term of the sum is
+$u_{x_i} (u_t)_{x_i}$. Integrating by parts in $x_i$ moves the derivative off
+of $u_t$ and onto $u_{x_i}$. By the divergence theorem, with $n_i$ the $i$-th
+component of the outward normal,
+\begin{equation} \label{eq:ibp-component}
+\int_\Omega u_{x_i} (u_t)_{x_i} \, dx
+  = \int_{\partial\Omega} u_t \, u_{x_i} n_i \, dS
+  - \int_\Omega u_t \, u_{x_i x_i} \, dx.
+\end{equation}
+Summing over $i$, and using $\sum_{i=1}^n u_{x_i} n_i = \grad u \cdot n
+= \pd{u}{n}$ and $\sum_{i=1}^n u_{x_i x_i} = \lap u$,
+\begin{equation} \label{eq:ibp-sum}
+\int_\Omega \sum_{i=1}^n u_{x_i} u_{x_i t} \, dx
+  = \int_{\partial\Omega} u_t \, \pd{u}{n} \, dS
+  - \int_\Omega u_t \lap u \, dx.
+\end{equation}
+(This is Green's first identity with $f = u_t$ and $g = u$.)
+The boundary integral vanishes under either boundary condition. If $u = 0$ on
+$\partial\Omega$ for all $t$, then $u$ does not change in time there, so
+$u_t = 0$ on $\partial\Omega$. If $\pd{u}{n} = 0$ on $\partial\Omega$, then
+that factor is zero directly. Therefore
+\begin{equation} \label{eq:ibp-result}
+\int_\Omega \sum_{i=1}^n u_{x_i} u_{x_i t} \, dx
+  = -\int_\Omega u_t \lap u \, dx.
+\end{equation}
+Substituting \eqref{eq:ibp-result} into \eqref{eq:dEdt-second},
+\begin{equation} \label{eq:dEdt-lap}
+\int_\Omega u_{tt} u_t \, dx - c^2 \int_\Omega u_t \lap u \, dx = 0.
+\end{equation}
+Combining the terms and factoring out $u_t$,
+\begin{equation} \label{eq:dEdt-factored}
+\frac{dE_\Omega}{dt}
+  = \int_\Omega u_t \left( u_{tt} - c^2 \lap u \right) dx = 0.
+\end{equation}
+The second factor is the original PDE, which is 0. Since the change in energy
+is 0, $E_\Omega(t)$ is constant in time.
+\end{proof}
+
+\begin{problem}
+From 3.3-2a in the book.
+
+For the non-homogeneous wave equation $u_{tt} = \lap u + f(x,t)$,
+show uniqueness of the solution $u$ given initial conditions $u(x,0) = g(x)$
+\end{problem}
+
+\begin{proof}
+    Assume we have two solutions $u_1$ and $u_2$ to the non-homogeneous wave equation with the same initial conditions. Define $u = u_1 - u_2$. Then $u$ satisfies the homogeneous wave equation:   
+
+$u_{tt} = \lap u$
+
+$u = 0$ on $\partial \Omega$
+
+By the previous problem, we know that the energy $E(t) = \int_\Omega (u_t^2 + |\grad u|^2) dx$ is constant in time.
+
+\end{proof}
+
+\begin{problem}
+From 3.3-2b in the book.
+
+For the non-homogeneous wave equation $u_{tt} = \lap u + f(x,t)$,
+show uniqueness of the solution $u$ given initial conditions $u_t(x,0) = g(x)$
+\end{problem}
+
+\begin{proof}
+    Assume we have two solutions $u_1$ and $u_2$ to the non-homogeneous wave equation with the same initial conditions. Define $u = u_1 - u_2$. Then $u$ satisfies the homogeneous wave equation:   
+
+$u_{tt} = \lap u$
+
+$u_t = 0$ on $\partial \Omega$
+
+By the previous problem, we know that the energy $E(t) = \int_\Omega (u_t^2 + |\grad u|^2) dx$ is constant in time.
+
+\end{proof}
+
+\begin{problem}
+From 3.3-6 in the book.
+
+\end{problem}
+
+\begin{proof}
+
+We will use Green's first identity, which states that for a $C^1$ scalar
+field $f$ and a $C^2$ scalar field $g$ on $\overline{\Omega}$,
+\begin{equation} \label{eq:green}
+\int_\Omega \left( f \lap g + \grad f \cdot \grad g \right) dx
+  = \int_{\partial\Omega} f \, \pd{g}{n} \, dS.
+\end{equation}
+Substituting $u$ for both $f$ and $g$ in \eqref{eq:green}, and using
+$\grad u \cdot \grad u = |\grad u|^2$,
+\begin{equation} \label{eq:green-u}
+\int_\Omega \left( u \lap u + |\grad u|^2 \right) dx
+  = \int_{\partial\Omega} u \, \pd{u}{n} \, dS.
+\end{equation}
+If either $u(x,t) = 0$ or $\pd{u}{n} = 0$ on $\partial\Omega$, then the
+integrand on the right side of \eqref{eq:green-u} vanishes, so that term is
+zero and
+\begin{equation} \label{eq:green-zero}
+\int_\Omega \left( u \lap u + |\grad u|^2 \right) dx = 0.
+\end{equation}
+Rearranging \eqref{eq:green-zero},
+\begin{equation} \label{eq:grad-lap}
+\int_\Omega |\grad u|^2 \, dx = \int_\Omega -u \lap u \, dx.
+\end{equation}
+
+\end{proof}
+
+\end{document}
