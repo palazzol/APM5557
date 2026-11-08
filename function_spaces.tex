@@ -1,0 +1,223 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% Common notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Sch}{\mathcal{S}}
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\Lloc}{L^1_{\mathrm{loc}}}
+\newcommand{\Cc}{C_c^\infty}
+\newcommand{\pair}[2]{\langle #1, #2 \rangle}
+
+\title{APM5557: Partial Differential Equations\\Functions, Equivalence Classes, and Distributions}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+The three kinds of object are related by a chain of maps:
+\[
+  \text{ordinary functions} \;\longrightarrow\; \text{equivalence classes}
+  \;\longrightarrow\; \text{distributions}.
+\]
+\textbf{Each map forgets some information and makes more operations possible.
+In particular, every object in the chain becomes differentiable once you reach
+the distributions.}
+
+\section{Ordinary functions}
+
+\begin{description}[leftmargin=0pt]
+  \item[What they are.] A rule $f:\Omega\to\R$ (or $\C$) with a definite value
+    $f(x)$ at every point.
+  \item[Equality.] $f=g$ means $f(x)=g(x)$ for \emph{every} $x$.
+  \item[Typical spaces.] \leavevmode
+    \begin{itemize}
+      \item $C(\overline\Omega)$, with $\|f\|_\infty=\sup|f|$
+      \item $C^k(\overline\Omega)$, with
+        $\|f\| = \sum_{|\alpha|\le k}\sup|\partial^\alpha f|$
+      \item $C^{k,\alpha}$, the H\"older spaces, and Lipschitz functions
+      \item $C^\infty(\Omega)$, and $\Cc(\Omega)$, the smooth functions with
+        compact support (the test functions)
+    \end{itemize}
+  \item[Language.] ``$f$ is continuous at $x_0$,'' ``$f(x_0)=3$,'' ``$f'(x_0)$
+    exists.'' Evaluating at a point, $f\mapsto f(x_0)$, is a continuous linear
+    functional on these spaces.
+  \item[Derivatives.] Classical, defined pointwise as limits of difference
+    quotients, and they may fail to exist.
+\end{description}
+
+\section{Equivalence classes (functions defined up to measure zero)}
+
+\begin{description}[leftmargin=0pt]
+  \item[What they are.] $[f]=\{g : g=f \text{ a.e.}\}$. Usually you just write
+    $f$ and call it a \emph{representative}.
+  \item[Why we need them.] $\int|f|^p=0$ implies only $f=0$ a.e., not
+    $f\equiv 0$. On functions, $\|\cdot\|_p$ is therefore just a seminorm. It
+    becomes a true norm only after you identify functions that agree a.e.
+    Formally,
+    \[
+      L^p = \mathcal{L}^p \big/ \{f : f=0 \text{ a.e.}\}.
+    \]
+  \item[Equality.] $f=g$ in $L^p$ means $f=g$ almost everywhere.
+  \item[Typical spaces.] \leavevmode
+    \begin{itemize}
+      \item $L^p(\Omega)$ for $1\le p\le\infty$; $L^\infty$ uses the essential
+        supremum
+      \item $\Lloc(\Omega)$, the functions integrable on every compact subset
+      \item The Sobolev spaces $W^{k,p}(\Omega)$ and $H^k=W^{k,2}$, with
+        $H^1_0\subset H^1$
+    \end{itemize}
+  \item[Language.] \leavevmode
+    \begin{itemize}
+      \item ``$f(x_0)$'' is \textbf{meaningless}, because a single point has
+        measure zero and you can change $f$ there freely.
+      \item ``$u\in H^1(a,b)$ is continuous'' means that $u$ \textbf{has a
+        continuous representative}, and you agree to use it. Since two
+        continuous functions that agree a.e.\ agree everywhere, that
+        representative is unique, which is why we can treat $C$ as a subspace
+        of $L^p$.
+      \item Boundary values such as ``$u=0$ on $\partial\Omega$'' in higher
+        dimensions need \textbf{trace theory}, because $\partial\Omega$ has
+        measure zero.
+    \end{itemize}
+  \item[Derivatives.] Weak derivatives. $g=u'$ means
+    \[
+      \int u\,\varphi' = -\int g\,\varphi \quad\text{for every } \varphi\in\Cc.
+    \]
+    The result is again an equivalence class.
+\end{description}
+
+\section{Distributions}
+
+\begin{description}[leftmargin=0pt]
+  \item[What they are.] Continuous linear functionals $T:\Cc(\Omega)\to\R$.
+    They aren't functions of $x$ at all. They are defined only through how they
+    act on test functions, written $\pair{T}{\varphi}$.
+  \item[Equality.] $T=S$ means $\pair{T}{\varphi}=\pair{S}{\varphi}$ for every
+    test function $\varphi$.
+  \item[Typical spaces.] \leavevmode
+    \begin{itemize}
+      \item $\D'(\Omega)$, the dual of $\Cc(\Omega)$
+      \item $\Sch'(\R^n)$, the tempered distributions (the dual of the Schwartz
+        space), which is where the Fourier transform lives
+      \item $\E'(\Omega)$, the distributions with compact support
+      \item Negative-order Sobolev spaces such as $H^{-1}=(H^1_0)'$, and $H^s$
+        for $s<0$
+    \end{itemize}
+    Spaces like $\D'$ and $\Sch'$ are \textbf{not normed}. They carry weak-*
+    topologies: $T_n\to T$ means $\pair{T_n}{\varphi}\to\pair{T}{\varphi}$ for
+    every $\varphi$. Spaces like $H^{-1}$, by contrast, are Hilbert spaces.
+  \item[How functions fit in.] Each $f\in\Lloc$ defines a distribution by
+    \[
+      \pair{T_f}{\varphi} = \int f\,\varphi .
+    \]
+    By the fundamental lemma of the calculus of variations, $T_f=T_g$ exactly
+    when $f=g$ a.e. So it is the \textbf{equivalence classes}, not the
+    individual functions, that embed injectively into $\D'$. A distribution of
+    the form $T_f$ is called \emph{regular}. The $\delta$ function,
+    $\mathrm{p.v.}\,1/x$, and $\delta'$ are not regular.
+  \item[Language.] \leavevmode
+    \begin{itemize}
+      \item ``$T\in\D'$ is in $L^2$'' means $T=T_f$ for some $f\in L^2$.
+      \item ``Restricted to $(0,1)$, $T$ is smooth'' refers to its
+        \emph{singular support}, the set where $T$ fails to be given by a
+        smooth function.
+      \item ``The support of $T$'' is the complement of the largest open set
+        on which $T=0$.
+    \end{itemize}
+  \item[Derivatives.] Every distribution has derivatives of every order,
+    defined by
+    \[
+      \pair{T'}{\varphi} = -\pair{T}{\varphi'} .
+    \]
+    The price is that you \textbf{can't multiply} two distributions in general.
+    $\delta\cdot\delta$, for example, is undefined.
+\end{description}
+
+\section{The chain of inclusions}
+
+\[
+  \Cc \subset C^k \subset C \hookrightarrow L^p_{\mathrm{loc}}
+  \subset \Lloc \hookrightarrow \D' .
+\]
+The arrow $C\hookrightarrow L^p_{\mathrm{loc}}$ is injective on continuous
+functions. On arbitrary functions the map to classes is not injective, because
+many functions share one class. Sobolev spaces fit in the same way, for example
+\[
+  H^1_0 \subset L^2 \subset H^{-1} \subset \D',
+\]
+which is the ``Gelfand triple'' used in weak formulations of PDEs.
+
+\section{Summary table}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.3}
+\small
+\begin{tabular}{>{\raggedright}p{2.6cm} >{\raggedright}p{3.6cm}
+                >{\raggedright}p{3.9cm} >{\raggedright\arraybackslash}p{3.9cm}}
+  \toprule
+  & \textbf{Ordinary functions} & \textbf{Equivalence classes}
+  & \textbf{Distributions} \\
+  \midrule
+  Object & value at every point & functions equal a.e.
+    & functional on test functions \\
+  Equality & everywhere & almost everywhere & against every $\varphi$ \\
+  $f(x_0)$ defined? & yes
+    & no (only if a continuous representative exists) & no \\
+  Derivative & classical, may not exist & weak, may not exist
+    & always exists \\
+  Products & yes
+    & yes, if the integrability works out (e.g.\ $L^2\cdot L^2\subset L^1$)
+    & not in general \\
+  Typical spaces & $C$, $C^k$, $C^{k,\alpha}$, $C^\infty$
+    & $L^p$, $\Lloc$, $W^{k,p}$, $H^k$
+    & $\D'$, $\Sch'$, $\E'$, $H^{-s}$ \\
+  Structure & Banach ($C^k$), Fr\'echet ($C^\infty$) & Banach / Hilbert
+    & weak-* topology, generally not normed \\
+  \bottomrule
+\end{tabular}
+\end{center}
+
+\section{Three examples where the levels give different answers}
+
+\begin{enumerate}
+  \item \textbf{$f(x)=|x|$}
+    \begin{itemize}
+      \item \emph{Classical:} differentiable everywhere except $x=0$.
+      \item \emph{a.e.\ / weak:} $f'=\operatorname{sign}(x)$, an $L^\infty$
+        class. The missing value at $0$ doesn't matter.
+      \item \emph{Distributional:} $f''=2\delta$, which is not a function.
+    \end{itemize}
+
+  \item \textbf{Heaviside function $H$}
+    \begin{itemize}
+      \item \emph{Classical:} $H'=0$ everywhere except $0$.
+      \item \emph{a.e.:} the pointwise a.e.\ derivative is $0$.
+      \item \emph{Weak:} $H$ has \textbf{no} weak derivative in $\Lloc$, so
+        $H\notin W^{1,1}_{\mathrm{loc}}$.
+      \item \emph{Distributional:} $H'=\delta$.
+    \end{itemize}
+    So ``differentiable a.e.'' is \textbf{not} the same as ``weakly
+    differentiable.''
+
+  \item \textbf{Cantor function $c$}
+    \begin{itemize}
+      \item \emph{Classical / a.e.:} $c$ is continuous, and $c'=0$ a.e.
+      \item \emph{Distributional:} $c'$ is the Cantor measure. That measure is
+        singular, so it isn't an $\Lloc$ function, and $c\notin W^{1,1}$.
+    \end{itemize}
+    This is why Sobolev functions in 1D must be \emph{absolutely} continuous:
+    continuity alone is not enough.
+\end{enumerate}
+
+\end{document}

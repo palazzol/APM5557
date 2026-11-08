@@ -1,0 +1,337 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% Common notation
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\Sch}{\mathcal{S}}
+\newcommand{\Cc}{C_c^\infty}
+\newcommand{\pair}[2]{\langle #1, #2 \rangle}
+\newcommand{\ip}[2]{( #1, #2 )}
+\newcommand{\lap}{\Delta}
+\newcommand{\grad}{\nabla}
+
+\theoremstyle{definition}
+\newtheorem*{definition}{Definition}
+\newtheorem*{example}{Example}
+\theoremstyle{plain}
+\newtheorem*{theorem}{Theorem}
+
+\title{APM5557: Partial Differential Equations\\The Gelfand Triple}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+A Gelfand triple (also called a \emph{rigged Hilbert space}) is a chain
+\[
+  V \;\subset\; H \;\subset\; V'
+\]
+of a ``nice'' space $V$, a Hilbert space $H$, and the dual $V'$ of $V$.
+\textbf{The middle space $H$ acts as a pivot: its inner product is extended to a
+pairing between $V'$ and $V$, so that objects too rough to lie in $H$ (such as
+$\delta$ or $-\lap u$ for $u\in H^1_0$) can still be ``integrated against''
+elements of $V$.} This is the setting for the weak formulation of elliptic and
+parabolic PDEs.
+
+\section{Definition}
+
+\begin{definition}
+Let $H$ be a Hilbert space with inner product $\ip{\cdot}{\cdot}_H$, and let
+$V$ be a reflexive Banach space (in practice, usually a Hilbert space) such that
+\begin{enumerate}[label=(\roman*)]
+  \item $V\subset H$ with continuous embedding: $\|v\|_H\le C\|v\|_V$ for all
+    $v\in V$;
+  \item $V$ is dense in $H$.
+\end{enumerate}
+Identify $H$ with its dual $H'$ using the Riesz representation theorem. Then
+\[
+  V \;\hookrightarrow\; H \cong H' \;\hookrightarrow\; V',
+\]
+and the triple $(V,H,V')$ is called a \emph{Gelfand triple}. $H$ is called the
+\emph{pivot space}.
+\end{definition}
+
+\subsection*{How $H$ sits inside $V'$}
+
+Each $h\in H$ defines a functional on $V$ by
+\[
+  \ell_h(v) = \ip{h}{v}_H, \qquad v\in V.
+\]
+This functional is bounded on $V$, because
+$|\ip{h}{v}_H|\le\|h\|_H\|v\|_H\le C\|h\|_H\|v\|_V$. So $\ell_h\in V'$ with
+$\|\ell_h\|_{V'}\le C\|h\|_H$.
+
+The map $h\mapsto\ell_h$ is \textbf{injective}: if $\ip{h}{v}_H=0$ for all
+$v\in V$, then by density of $V$ in $H$ it holds for all $v\in H$, so $h=0$.
+This is exactly where the density assumption (ii) is used. We identify $h$ with
+$\ell_h$ and write $H\subset V'$. If $V$ is reflexive, $H$ is also dense in
+$V'$.
+
+\subsection*{The duality pairing extends the inner product}
+
+Write $\pair{f}{v}=\pair{f}{v}_{V',V}$ for the action of $f\in V'$ on $v\in V$.
+Under the identification above,
+\[
+  \boxed{\;\pair{h}{v} = \ip{h}{v}_H \quad\text{whenever } h\in H,\ v\in V.\;}
+\]
+So $\pair{\cdot}{\cdot}$ is ``the $H$ inner product, extended to the case where
+the first argument is rougher than $H$ and the second is smoother.''
+
+\section{The canonical example: $H^1_0(\Omega)\subset L^2(\Omega)\subset H^{-1}(\Omega)$}
+
+Take $\Omega\subset\R^n$ bounded and
+\[
+  V=H^1_0(\Omega), \qquad H=L^2(\Omega), \qquad V'=H^{-1}(\Omega).
+\]
+\begin{itemize}
+  \item The embedding is continuous: $\|v\|_{L^2}\le\|v\|_{H^1}$. Density holds
+    because $\Cc(\Omega)\subset H^1_0$ is already dense in $L^2$.
+  \item By the Poincar\'e inequality we may use
+    $\|v\|_{H^1_0}=\|\grad v\|_{L^2}$ as the norm on $V$.
+  \item The norm on $H^{-1}$ is the dual norm
+    \[
+      \|f\|_{H^{-1}} = \sup_{0\ne v\in H^1_0}
+      \frac{|\pair{f}{v}|}{\|\grad v\|_{L^2}} .
+    \]
+  \item Every $f\in H^{-1}$ can be written $f=g_0+\sum_{i=1}^n\partial_i g_i$
+    with $g_0,\dots,g_n\in L^2$, acting by
+    $\pair{f}{v}=\int g_0v-\sum_i\int g_i\,\partial_i v$.
+\end{itemize}
+
+\subsection*{Elements of $H^{-1}$ that are not in $L^2$}
+
+\begin{enumerate}
+  \item \textbf{Derivatives of $L^2$ functions.} If $g\in L^2(\Omega)$, then
+    $\partial_i g\in H^{-1}$, with $\pair{\partial_i g}{v}=-\int g\,\partial_i v$.
+    For example, the derivative of the Heaviside function, $H'=\delta$, lies in
+    $H^{-1}(-1,1)$.
+  \item \textbf{Point masses in 1D.} On an interval $(a,b)$, functions in
+    $H^1_0$ are continuous with
+    $|v(x_0)|\le\sqrt{b-a}\,\|v'\|_{L^2}$, so
+    $\pair{\delta_{x_0}}{v}=v(x_0)$ is bounded and $\delta_{x_0}\in H^{-1}(a,b)$.
+  \item \textbf{But not in 2D or higher.} For $n\ge2$, $H^1_0$ contains
+    unbounded functions (e.g.\ $\log\log(e/|x|)$ in 2D), so point evaluation is
+    not bounded and $\delta\notin H^{-1}$.
+  \item \textbf{Laplacians of $H^1_0$ functions.} For $u\in H^1_0$,
+    $-\lap u\in H^{-1}$ with $\pair{-\lap u}{v}=\int\grad u\cdot\grad v$.
+\end{enumerate}
+
+\section{A concrete picture using Fourier sine series}
+
+On $\Omega=(0,\pi)$ the Dirichlet eigenfunctions of $-d^2/dx^2$ are
+\[
+  \varphi_n(x)=\sqrt{2/\pi}\,\sin(nx), \qquad \lambda_n=n^2,
+\]
+an orthonormal basis of $L^2(0,\pi)$. Writing $v=\sum c_n\varphi_n$, the three
+spaces become weighted sequence spaces:
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{lll}
+  \toprule
+  Space & Condition on coefficients & Squared norm \\
+  \midrule
+  $H^1_0(0,\pi)$ & $\sum n^2|c_n|^2<\infty$ & $\|v'\|_{L^2}^2=\sum n^2|c_n|^2$ \\
+  $L^2(0,\pi)$ & $\sum |c_n|^2<\infty$ & $\|v\|_{L^2}^2=\sum |c_n|^2$ \\
+  $H^{-1}(0,\pi)$ & $\sum n^{-2}|c_n|^2<\infty$ & $\|f\|_{H^{-1}}^2=\sum n^{-2}|c_n|^2$ \\
+  \bottomrule
+\end{tabular}
+\end{center}
+The pairing of $f=\sum f_n\varphi_n\in H^{-1}$ with $v=\sum c_n\varphi_n\in H^1_0$
+is
+\[
+  \pair{f}{v}=\sum_n f_n c_n
+  = \sum_n \bigl(n^{-1}f_n\bigr)\bigl(n\,c_n\bigr),
+\]
+which converges by Cauchy--Schwarz: the weight $n^{-1}$ lost by $f$ is made up
+by the weight $n$ gained by $v$.
+
+\begin{example}[$\delta_{x_0}$]
+Its coefficients are $f_n=\pair{\delta_{x_0}}{\varphi_n}=\sqrt{2/\pi}\sin(nx_0)$.
+These are bounded but do not decay, so $\sum|f_n|^2=\infty$ (not in $L^2$) while
+$\sum n^{-2}|f_n|^2<\infty$ (in $H^{-1}$).
+\end{example}
+
+The same picture gives the whole scale $H^s$, $s\in\R$, with norm
+$\sum n^{2s}|c_n|^2$, and a Gelfand triple $H^s\subset L^2\subset H^{-s}$ for
+every $s>0$.
+
+\section{Why we don't also identify $V$ with $V'$}
+
+If $V$ is itself a Hilbert space, Riesz gives an isomorphism
+$R:V\to V'$, $\pair{Ru}{v}=\ip{u}{v}_V$. It is tempting to identify $V$ with
+$V'$ too, but \textbf{you cannot use both identifications at once}.
+
+For $V=H^1_0$ with $\ip{u}{v}_V=\int\grad u\cdot\grad v$, the Riesz map is
+\[
+  R = -\lap : H^1_0\to H^{-1}.
+\]
+Identifying $V$ with $V'$ would identify $u$ with $-\lap u$, whereas the pivot
+identification $H\cong H'$ identifies $u$ with $u$ itself. These contradict each
+other. On $(0,\pi)$ (see the previous section), $-\lap\varphi_2=4\varphi_2$, so
+the first identification would send $\varphi_2$ to $4\varphi_2\in V'$, while the
+second sends it to $\varphi_2\in V'$. Using both would force
+$\varphi_2=4\varphi_2$. A Gelfand triple makes a choice: \textbf{only the pivot space
+$H$ is identified with its dual}, and $V'$ is kept as a genuinely larger space.
+
+\section{Application: weak formulation of elliptic problems}
+
+Consider $-\lap u=f$ in $\Omega$, $u=0$ on $\partial\Omega$, with $f\in H^{-1}$.
+
+\begin{theorem}
+For every $f\in H^{-1}(\Omega)$ there is a unique $u\in H^1_0(\Omega)$ with
+\[
+  \int_\Omega \grad u\cdot\grad v = \pair{f}{v}
+  \qquad\text{for all } v\in H^1_0(\Omega),
+\]
+and $\|\grad u\|_{L^2}=\|f\|_{H^{-1}}$.
+\end{theorem}
+
+\begin{proof}[Sketch]
+The left side is the inner product of $H^1_0$, and $v\mapsto\pair{f}{v}$ is a
+bounded linear functional on $H^1_0$. The Riesz representation theorem gives a
+unique $u$, with norm equal to the functional's norm. (For a general coercive
+bilinear form, use Lax--Milgram instead.)
+\end{proof}
+
+So $-\lap:H^1_0\to H^{-1}$ is an isometric isomorphism. The Gelfand triple is
+what lets us state this cleanly:
+\begin{itemize}
+  \item the solution lives in $V$;
+  \item the data lives in $V'$, which allows $f=\delta$ in 1D, or
+    $f=\partial_i g$ with $g\in L^2$;
+  \item when the data happens to lie in $H=L^2$, the pairing reduces to
+    $\pair{f}{v}=\int fv$, which is the usual weak form.
+\end{itemize}
+
+\section{Application: evolution equations}
+
+For the heat equation $u_t-\lap u=f$, the natural solution space is
+\[
+  W(0,T)=\{u\in L^2(0,T;V) : u'\in L^2(0,T;V')\},
+\]
+with $V=H^1_0$, $V'=H^{-1}$. The time derivative is allowed to be rough (in
+$V'$) because $u_t=\lap u+f$ and $\lap u\in H^{-1}$.
+
+\begin{theorem}[Lions--Magenes]
+If $u\in W(0,T)$, then $u\in C([0,T];H)$ (after modification on a null set),
+and
+\[
+  \frac{d}{dt}\|u(t)\|_H^2 = 2\pair{u'(t)}{u(t)} \quad\text{for a.e. } t.
+\]
+\end{theorem}
+
+This is the rigorous form of the energy identity. It shows that the initial
+condition $u(0)=u_0\in H$ makes sense, and it is used to prove uniqueness and
+energy estimates such as
+$\|u(t)\|_{L^2}^2+2\int_0^t\|\grad u\|_{L^2}^2\,ds\le\|u_0\|_{L^2}^2$ when
+$f=0$.
+
+\section{Other Gelfand triples}
+\label{sec:other}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{>{\raggedright}p{3.4cm} >{\raggedright}p{2.6cm}
+                >{\raggedright\arraybackslash}p{7.6cm}}
+  \toprule
+  Triple & Pivot & Where it is used \\
+  \midrule
+  $H^1_0\subset L^2\subset H^{-1}$ & $L^2$
+    & Dirichlet problems, heat equation \\
+  $H^1\subset L^2\subset (H^1)'$ & $L^2$
+    & Neumann problems ($V=H^1$ is dense in $L^2$, but $(H^1)'\ne H^{-1}$) \\
+  $H^s\subset L^2\subset H^{-s}$ & $L^2$
+    & higher-order and fractional operators \\
+  $\Sch\subset L^2(\R^n)\subset\Sch'$ & $L^2$
+    & Fourier analysis; quantum mechanics, where plane waves $e^{ikx}$ and
+      $\delta_{x_0}$ are ``generalized eigenfunctions'' of momentum and
+      position \\
+  \bottomrule
+\end{tabular}
+\end{center}
+The last one is not a Gelfand triple in the Hilbert-space sense ($\Sch$ is a
+Fr\'echet space, not a Hilbert space), but the structure is the same and it is
+the original setting of Gelfand's ``rigged Hilbert space.''
+
+\section{Summary}
+
+\begin{itemize}
+  \item A Gelfand triple $V\subset H\subset V'$ needs $V$ continuously and
+    densely embedded in a Hilbert space $H$.
+  \item Only $H$ is identified with its dual. $V'$ is strictly larger than $H$
+    and contains rougher objects.
+  \item The pairing $\pair{f}{v}_{V',V}$ extends $\ip{f}{v}_H$.
+  \item Differential operators like $-\lap$ map $V$ isomorphically onto $V'$,
+    which is the functional-analytic content of the weak formulation.
+\end{itemize}
+
+\appendix
+
+\section{History}
+
+The Gelfand triple is named after Israel Gelfand. It is sometimes attributed to
+John von Neumann, but his work came earlier and supplied the Hilbert-space
+framework that Gelfand's construction extends. \textbf{Von Neumann's own approach
+was designed to avoid exactly the objects that Gelfand triples make room for.}
+
+\subsection*{John von Neumann (around 1927--1932)}
+
+\begin{itemize}
+  \item He put quantum mechanics on a rigorous Hilbert-space footing in
+    \emph{Mathematical Foundations of Quantum Mechanics} (1932).
+  \item He developed the spectral theory of unbounded self-adjoint operators.
+  \item He openly criticized Dirac's use of $\delta$ functions and of
+    ``eigenvectors'' that aren't in the Hilbert space, such as plane waves
+    $e^{ikx}$. He replaced them with projection-valued measures, so in his
+    framework every object stays inside $H$.
+\end{itemize}
+
+\subsection*{Israel Gelfand and collaborators (mid-1950s to early 1960s)}
+
+\begin{itemize}
+  \item They introduced the rigged Hilbert space $\Phi\subset H\subset\Phi'$,
+    where $\Phi$ is a nuclear space. A key step was the nuclear spectral
+    theorem, from Gelfand and Kostyuchenko (1955). Krzysztof Maurin proved a
+    similar result independently, so it is sometimes called the Gelfand--Maurin
+    theorem.
+  \item It was developed fully in \emph{Generalized Functions}, Vol.~4, by
+    Gelfand and Vilenkin (1961).
+  \item The theorem says that a self-adjoint operator has a complete set of
+    generalized eigenvectors in $\Phi'$. That made Dirac's bra-ket formalism
+    rigorous, which is the opposite of von Neumann's strategy of avoiding it.
+  \item The word ``rigged'' is a translation of the Russian
+    \emph{osnashchyonnoe}, meaning ``equipped.''
+\end{itemize}
+
+\subsection*{Other contributors}
+
+\begin{itemize}
+  \item \textbf{Laurent Schwartz} created distribution theory (1945--1950),
+    which gave $\Sch\subset L^2\subset\Sch'$ its outer spaces.
+  \item \textbf{Jacques-Louis Lions and Enrico Magenes} made the Hilbert-space
+    version $V\subset H\subset V'$ the standard tool for weak formulations of
+    PDEs, which is the version used in this document. The term ``pivot space''
+    (\emph{espace pivot}) comes from that French school.
+  \item \textbf{Arno B\"ohm, J.\,E.~Roberts, and J.-P.~Antoine} brought rigged
+    Hilbert spaces into quantum physics in the 1960s.
+\end{itemize}
+
+\subsection*{Summary}
+
+The line of influence runs from von Neumann's Hilbert space, through Schwartz's
+distributions, to Gelfand's rigged Hilbert space and then Lions's Gelfand
+triples for PDEs. Section~\ref{sec:other} calls $\Sch\subset L^2\subset\Sch'$
+the original setting of Gelfand's rigged Hilbert space. Strictly, Gelfand worked
+with general nuclear spaces $\Phi$, and $\Sch$ is the standard example of one
+rather than the only setting.
+
+\end{document}
